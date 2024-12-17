@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Products</h3>
+<p>
+    <a th:href="@{/products/create}">
+        Add new product
+    </a>
+</p>
+<div class="notify">
+    <div th:if="${success}" style="margin-bottom: 5px;">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+<table id="products">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Manufacturer</th>
+        <th colspan="2">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product, stat:${products}" th:class="${stat.odd}?'odd':'even'">
+        <td th:text="${stat.count}"></td>
+        <td>
+            <a th:href="@{/products/{id}/view(id=${product.id})}" th:text="${product.name}"></a>
+        </td>
+        <td th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}" class="price"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.manufacturer}"></td>
+        <td>
+            <a th:href="@{/products/{id}/edit(id=${product.id})}">Edit</a>
+        </td>
+        <td>
+            <a th:href="@{/products/{id}/delete(id=${product.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<footer th:insert="/layout :: footer"></footer>
+</body>
+</html>
