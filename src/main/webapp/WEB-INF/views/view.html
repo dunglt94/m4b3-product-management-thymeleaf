@@ -38,6 +38,10 @@
         <td>Manufacturer: </td>
         <td th:text="${product.manufacturer}"></td>
     </tr>
+    <tr>
+        <td>Image: </td>
+        <td><img th:src="@{'\uploadFile\\' + ${product.image}}" alt="" src=""></td>
+    </tr>
     </tbody>
 </table>
 <footer th:replace="/layout :: footer"></footer>
