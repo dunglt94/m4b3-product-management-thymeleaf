@@ -61,6 +61,11 @@ public class ProductController {
     public String showSearchForm(@RequestParam String name ,ModelMap model) {
         List<Product> products = productService.findByName(name);
         model.addAttribute("products", products);
+        if (products.isEmpty()) {
+            model.addAttribute("message", "Product(s) not found");
+        }
+        model.addAttribute("searchQuery", name);
+
         return "search";
     }
 }
