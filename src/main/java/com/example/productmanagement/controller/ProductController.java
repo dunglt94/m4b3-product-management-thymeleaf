@@ -8,7 +8,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,6 +33,13 @@ public class ProductController {
     public String createProduct(Product product) {
         productService.create(product);
         return "redirect:/products";
+    }
+
+    @GetMapping("/{id}/view")
+    public String showProductView(@PathVariable int id, ModelMap model) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "view";
     }
 
     @GetMapping("/{id}/edit")

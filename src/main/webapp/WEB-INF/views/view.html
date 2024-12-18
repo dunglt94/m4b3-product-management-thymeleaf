@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Product Details</h3>
+<p>
+    <a th:href="@{/products}">
+        Back to product list
+    </a>
+</p>
+<table id="products" style="width: 40%">
+    <thead>
+    <tr>
+        <th colspan="2">Product details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>ID: </td>
+        <td th:text="${product.id}"></td>
+    </tr>
+    <tr>
+        <td>Name: </td>
+        <td th:text="${product.name}"></td>
+    </tr>
+    <tr>
+        <td>Price: </td>
+        <td th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}"></td>
+    </tr>
+    <tr>
+        <td>Description: </td>
+        <td th:text="${product.description}"></td>
+    </tr>
+    <tr>
+        <td>Manufacturer: </td>
+        <td th:text="${product.manufacturer}"></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
