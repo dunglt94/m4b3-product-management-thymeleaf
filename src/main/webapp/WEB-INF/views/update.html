@@ -12,7 +12,8 @@
     </a>
 </p>
 <div id="form">
-    <form th:action="@{/products/update}" th:object="${product}" method="post" novalidate="novalidate">
+    <form th:action="@{/products/update}" th:object="${productForm}" enctype="multipart/form-data"
+          method="post" novalidate="novalidate">
         <input type="hidden" th:field="*{id}">
         <div>
             <label for="name">Name</label>
@@ -32,6 +33,7 @@
         </div>
         <div>
             <label for="image">Image</label>
+            <img th:src="@{'\uploadFile\\' + ${productImage}}" alt="" src="">
             <input type="file" id="image" th:field="*{image}"/>
         </div>
         <input type="submit" value="Update">

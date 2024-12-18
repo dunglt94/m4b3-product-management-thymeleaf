@@ -40,16 +40,7 @@ public class ProductController {
 
     @PostMapping("/save")
     public String createProduct(ProductForm productForm, RedirectAttributes redirectAttributes) {
-        MultipartFile multipartFile = productForm.getImage();
-        String fileName = multipartFile.getOriginalFilename();
-        try {
-            FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + fileName));
-        } catch (IOException e) {
-            //noinspection CallToPrintStackTrace
-            e.printStackTrace();
-        }
-        Product product = new Product(productForm.getId(), productForm.getName(), productForm.getPrice(),
-                productForm.getDescription(), productForm.getManufacturer(), fileName);
+        Product product = uploadFile(productForm);
         productService.create(product);
         return "redirect:/products";
     }
@@ -64,15 +55,36 @@ public class ProductController {
     @GetMapping("/{id}/edit")
     public String showUpdateForm(@PathVariable int id, ModelMap model) {
         Product product = productService.findById(id);
-        model.addAttribute("product", product);
+        ProductForm productForm = new ProductForm();
+        productForm.setId(product.getId());
+        productForm.setName(product.getName());
+        productForm.setPrice(product.getPrice());
+        productForm.setDescription(product.getDescription());
+        productForm.setManufacturer(product.getManufacturer());
+        model.addAttribute("productForm", productForm);
+        model.addAttribute("productImage", product.getImage());
         return "update";
     }
 
     @PostMapping("/update")
-    public String updateProduct(Product product, RedirectAttributes redirectAttributes) {
+    public String updateProduct(ProductForm productForm, RedirectAttributes redirectAttributes) {
+        Product product = uploadFile(productForm);;
         productService.update(product);
         redirectAttributes.addFlashAttribute("success", "Product updated successfully");
         return "redirect:/products";
+    }
+
+    private Product uploadFile(ProductForm productForm) {
+        MultipartFile multipartFile = productForm.getImage();
+        String fileName = multipartFile.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + fileName)) ;
+        } catch (IOException e) {
+            //noinspection CallToPrintStackTrace
+            e.printStackTrace();
+        }
+        return new Product(productForm.getId(), productForm.getName(), productForm.getPrice(),
+                productForm.getDescription(), productForm.getManufacturer(), fileName);
     }
 
     @GetMapping("/{id}/delete")
