@@ -13,7 +13,7 @@ public class ProductService implements IProductService {
 
     private static final String SELECT_ALL_PRODUCTS = "SELECT * FROM products";
     private static final String FIND_PRODUCT_BY_ID = "SELECT * FROM products WHERE id = ?";
-    private static final String FIND_PRODUCT_BY_NAME = "SELECT * FROM products WHERE name = ?";
+    private static final String FIND_PRODUCT_BY_NAME = "SELECT * FROM products WHERE LOWER(name) LIKE LOWER(CONCAT('%',?,'%'))";
     private static final String INSERT_PRODUCTS = "INSERT INTO products(name, price, description, manufacturer) " +
                                                 "VALUES(?,?,?,?)";
     private static final String UPDATE_PRODUCT = "update products set name = ?, price = ?, " +
