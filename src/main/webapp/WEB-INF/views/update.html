@@ -33,7 +33,7 @@
         </div>
         <div>
             <label for="image">Image</label>
-            <img th:src="@{'\uploadFile\\' + ${productImage}}" alt="" src="">
+            <img th:src="@{'\image\\' + ${productImage}}" alt="" src="">
             <input type="file" id="image" th:field="*{image}"/>
         </div>
         <input type="submit" value="Update">
