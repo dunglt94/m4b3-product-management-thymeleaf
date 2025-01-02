@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<h3>Products</h3>
+<h3 th:text="#{list.language}">Products</h3>
 <form th:action="@{/products/search}" method="get">
     <div>
         <label><input type="search" id="search" name="name" placeholder="Enter product name" required></label>
@@ -43,7 +43,7 @@
         <td th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}" class="price"></td>
         <td th:text="${product.description}"></td>
         <td th:text="${product.manufacturer}"></td>
-        <td><img th:src="@{'\image\\' + ${product.image}}" alt="" src=""></td>
+        <td><img th:src="@{'/image/' + ${product.image}}" alt=""></td>
         <td>
             <a th:href="@{/products/{id}/edit(id=${product.id})}">Edit</a>
         </td>
